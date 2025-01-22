@@ -8,32 +8,49 @@
 
 // mi ricavo i dati del Dom
 
-const BoxEmail = document.getElementById('box-email')
+const boxEmail = document.getElementById('box-email')
 // mi salvo l'endpoint
 const endpoint = 'https://flynn.boolean.careers/exercises/api/random/mail'
+
+// mi salvo un array vuoto che contiene 
+let emails = [];
 // creo un ciclo di misura 10 
+for(let i = 0; i < 10; i++){
 
     // mi creo la chiamata ricavandomi il datoiesimo che mi interessa 
-let emails = [];
-    for(let i = 0; i < 10; i++){
         axios.get(endpoint)
             .then((element) => {
-                // console.log(element);
+                // mi salvo data dove all'interno ci sara l'informazione che mi serve
                 const data = element.data;
-                // console.log(data);
-                const email = data.response
-                // console.log(email);
+
+                // mi ricavo l'informazione
+                const result = data.response
+                // console.log(emails);
 
                 // mi salvo i dati in un array esterno
-                emails.push(email);
+                emails.push(result);
+
+                // mi salvo l'elemento che conterra la stringa html inizialmente vuota
+                let items = ``;
+
+                // se le email sono 10 allora puoi entrare
+                if (emails.length === 10){
+                    // per ogni email
+                    emails.forEach((email, index) => {
+                        // console.log(index, email);
+
+                        // generami una stringa
+                        let item = `<li class="list-group-item">${email}</li>`;
+
+                        // aggiungila al resto 
+                        items += item;
+                    })
+
+                    // lo stampo a schermo
+                    boxEmail.innerHTML = items
+                }
             })
             .catch((error) => {
                 console.error(error)
             })
-
-        
-
     }
-
-// lo stampo a schermo
-// BoxEmail.innerHTML = `<li class="list-group-item">${email}</li>`
