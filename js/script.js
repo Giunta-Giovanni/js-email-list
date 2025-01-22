@@ -25,15 +25,15 @@ let emails = [];
                 // console.log(email);
 
                 // mi salvo i dati in un array esterno
-                array.push(email)  
+                emails.push(email);
             })
             .catch((error) => {
                 console.error(error)
             })
 
-    }
-console.log(array);
+        
 
+    }
 
 // lo stampo a schermo
 // BoxEmail.innerHTML = `<li class="list-group-item">${email}</li>`
