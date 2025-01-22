@@ -6,86 +6,92 @@
 // Inserire un bottone che al click faccia il fetch altre 10 mail (sostituendo le altre) 
 
 
-// mi ricavo i dati del Dom
-
+// ricavo i dati del Dom
 const boxEmail = document.getElementById('box-email')
 // mi salvo l'endpoint
 const endpoint = 'https://flynn.boolean.careers/exercises/api/random/mail'
-/*
-// mi salvo un array vuoto che contiene 
-let emails = [];
-// creo un ciclo di misura 10 
-for(let i = 0; i < 10; i++){
 
-    // mi creo la chiamata ricavandomi il datoiesimo che mi interessa 
-        axios.get(endpoint)
-            .then((element) => {
-                // mi salvo data dove all'interno ci sara l'informazione che mi serve
-                const data = element.data;
+// METODO SENZA ARRAY ESTERNO
 
-                // mi ricavo l'informazione
-                const result = data.response
-                // console.log(emails);
-
-                
-                // mi salvo i dati in un array esterno
-                emails.push(result);
-
-                // mi salvo l'elemento che conterra la stringa html inizialmente vuota
-                let items = ``;
-
-                // se le email sono 10 allora puoi entrare
-                if (emails.length === 10){
-                    // per ogni email
-                    emails.forEach((email, index) => {
-                        // console.log(index, email);
-
-                        // generami una stringa
-                        let item = `<li class="list-group-item">${email}</li>`;
-
-                        // aggiungila al resto 
-                        items += item;
-                    })
-
-                    // lo stampo a schermo
-                    boxEmail.innerHTML = items
-                }
-            })
-            .catch((error) => {
-                // codice da eseguire in caso di errore
-                console.error(error)
-            })
-    }
-*/
-
-// metodo senza array esterno
-// mi salvo l'elemento che conterra la stringa html inizialmente vuota
-
+// Salvo la stringa che conterra le liste inzialmente vuota
 let items = ``;
-// creo un ciclo di misura 10 
+
+// creo un ciclo che mi genera 10 email
+for(let i = 0; i < 10; i++){
+    // creo la chiamata api per trovare l'oggetto contente l'email 
+    axios.get(endpoint)
+        .then(element => {
+            // Salvo email ricavandomela dal suo percorso 
+            const email = element.data.response;
+            console.log(`Ho generato: ${email}`);
+            
+            // Genero una lista
+            let item =
+            `
+            <li class="list-group-item">${email}</li>
+            `;
+            console.log(`La mia lista: ${item}`);
+
+
+            // La aggiungo alle altre liste
+            items += item;
+            // La inserisco nel DOM
+            boxEmail.innerHTML = items;
+
+        })
+        // codice da eseguire in caso di errore
+        .catch(error => console.error(error))
+ }
+
+
+
+/*
+// METODO CON ARRAY ESTERNO
+// Salvo un array emails inzialmente vuoto
+let emails = [];
+// ciclo che mi genera 10 emails
 for(let i = 0; i < 10; i++){
 
-    // mi creo la chiamata ricavandomi il datoiesimo che mi interessa 
-        axios.get(endpoint)
-            .then((element) => {
-                // mi salvo data dove all'interno ci sara l'informazione che mi serve
-                const data = element.data;
+    // Chiamata api per trovare l'oggetto contente l'email 
+    axios.get(endpoint)
+        .then(element => {
 
-                // mi ricavo l'informazione
-                const email = data.response
+            // Salvo data dove all'interno ci sara l'informazione che mi serve
+            const data = element.data;
+            // Ricavo l'informazione
+            const result = data.response
+            
+            // Salvo i dati ricevuti nell'array emails
+            emails.push(result);
+            // console.log(`Ho generato: ${result}`);
+            
 
-                // generami una stringa
-                let item = `<li class="list-group-item">${email}</li>`;
+            // Salvo l'elemento che conterra la stringa html inizialmente vuota
+            let items = ``;
 
-                // aggiungila al resto 
-                items += item;
+            // se le email sono 10 allora puoi entrare
+            if (emails.length === 10){
 
-                // lo stampo a schermo
-                boxEmail.innerHTML = items
+                // per ogni email
+                emails.forEach((email, index) => {
+                    console.log(`Email numero ${index+1}: ${email}`);
+                    
+
+                    // Genero una lista
+                    let item = 
+                    `
+                    <li class="list-group-item">${email}</li>
+                    `;
+                    // La aggiungo alle altre liste
+                    items += item;
                 })
+                // La inserisco nel DOM
+                boxEmail.innerHTML = items;
+                console.log(`le mie liste: ${items}`);
+            }
 
-            .catch((error) => {
-                // codice da eseguire in caso di errore
-                console.error(error)
-            })
-    }
+        })
+         // codice da eseguire in caso di errore
+    .catch(error => console.error(error))
+}
+*/
