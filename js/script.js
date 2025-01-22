@@ -6,13 +6,12 @@
 // Inserire un bottone che al click faccia il fetch altre 10 mail (sostituendo le altre) 
 
 
-// ricavo i dati del Dom
+// Ricavo i dati del Dom
 const boxEmail = document.getElementById('box-email')
-// mi salvo l'endpoint
+// Salvo l'endpoint
 const endpoint = 'https://flynn.boolean.careers/exercises/api/random/mail'
 
 // METODO SENZA ARRAY ESTERNO
-
 // Salvo la stringa che conterra le liste inzialmente vuota
 let items = ``;
 
@@ -32,7 +31,6 @@ for(let i = 0; i < 10; i++){
             `;
             console.log(`La mia lista: ${item}`);
 
-
             // La aggiungo alle altre liste
             items += item;
             // La inserisco nel DOM
@@ -42,8 +40,6 @@ for(let i = 0; i < 10; i++){
         // codice da eseguire in caso di errore
         .catch(error => console.error(error))
  }
-
-
 
 /*
 // METODO CON ARRAY ESTERNO
